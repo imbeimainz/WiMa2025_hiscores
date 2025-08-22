@@ -70,7 +70,7 @@ time_to_score <- function(time_needed) {
 xs <- seq(from = 0, to = 10, by = 0.1)
 plot(xs, sapply(xs, time_to_score), ylim = c(0,100))
 
-# Define UI
+# Define UI ------------------------
 wima_ui <- bslib::page_sidebar(
   title = "Maskenball Hi-Scores",
   theme = bs_theme(
@@ -84,7 +84,8 @@ wima_ui <- bslib::page_sidebar(
     preset = "sketchy"
   ),
   sidebar = bslib::sidebar(
-    "These are the current rankings for the Maskenball game!",
+    title = "These are the current rankings for the Maskenball game!",
+    img(src = "IMBEI-UM_maskenball_social.png"),
     "Keep in mind the scores are calculated only upon completion of the 20 images"
   ),
   bslib::card(
