@@ -151,10 +151,15 @@ wima_server <- function(input, output, session) {
     
     computed_scores <- dplyr::arrange(computed_scores, desc(Score))
     
-    ## TODO if more than three rows are in, show gold silver and bronze? would be a funny touch
-    computed_scores$Player[1:3] <- 
-      paste0(c(emo::ji("gold"), emo::ji("silver"), emo::ji("bronze")),
-             computed_scores$Player[1:3])
+    if (nrow(computed_scores) >= 1) {
+      computed_scores$Player[1] <- paste0(emo::ji("gold"), computed_scores$Player[1])
+    }
+    if (nrow(computed_scores) >= 2) {
+      computed_scores$Player[2] <- paste0(emo::ji("silver"), computed_scores$Player[2])
+    }
+    if (nrow(computed_scores) >= 3) {
+      computed_scores$Player[3] <- paste0(emo::ji("bronze"), computed_scores$Player[3])
+    }
     
     reactable::reactable(computed_scores, searchable = TRUE)
   })
