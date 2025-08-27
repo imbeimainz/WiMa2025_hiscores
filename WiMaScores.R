@@ -90,7 +90,6 @@ wima_ui <- bslib::page_sidebar(
   ),
   bslib::card(
     bslib::card_header("Top scorers - WiMa 2025"),
-    "Yadda yadda",
     bslib::layout_column_wrap(
       width = 1/2,
       uiOutput("player_counter"),
