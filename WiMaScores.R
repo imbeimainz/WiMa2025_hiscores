@@ -151,6 +151,10 @@ wima_server <- function(input, output, session) {
     
     computed_scores <- dplyr::arrange(computed_scores, desc(Score))
     
+    if(computed_scores$Player[1] == "NullPlayer") {
+      computed_scores <- computed_scores[-1,]
+    }
+    
     if (nrow(computed_scores) >= 1) {
       computed_scores$Player[1] <- paste0(emo::ji("gold"), computed_scores$Player[1])
     }
@@ -165,8 +169,14 @@ wima_server <- function(input, output, session) {
   })
   
   output$player_counter <- renderUI({
+    nr_players <- length(unique(hiscores_data()$player_name))
+    
+    if ((nr_players == 1) && (unique(hiscores_data()$player_name) == "NullPlayer")) {
+      nr_players <- 0
+    }
+    
     bslib::value_box("Players so far", 
-                     value = length(unique(hiscores_data()$player_name)),
+                     value = nr_players,
                      showcase = bsicons::bs_icon("people-fill"),
                      theme = "teal")
   })
@@ -178,11 +188,20 @@ wima_server <- function(input, output, session) {
     entry_for_latest <- hiscores_computed()[match(latest_player, hiscores_computed()$Player),]
     message(entry_for_latest)
     
-    bslib::value_box("Latest Player:", 
-                     value = paste0(latest_player, ": ", entry_for_latest$Score, 
-                                    "\n(", entry_for_latest$`Rounds played`, " rounds played)"),
-                     showcase = bsicons::bs_icon("person-circle"),
-                     theme = "primary")
+    if ((length(unique(hiscores_data()$player_name)) == 1) && (unique(hiscores_data()$player_name) == "NullPlayer")) {
+      bslib::value_box("Latest Player:", 
+                       value = paste0("No players yet"),
+                       showcase = bsicons::bs_icon("person-circle"),
+                       theme = "primary")
+    } else {
+      bslib::value_box("Latest Player:", 
+                       value = paste0(latest_player, ": ", entry_for_latest$Score, 
+                                      "\n(", entry_for_latest$`Rounds played`, " rounds played)"),
+                       showcase = bsicons::bs_icon("person-circle"),
+                       theme = "primary")
+    }
+    
+    
   })
 }
 
