@@ -17,7 +17,8 @@ colnames_hiscores_file <- c(
   "player_name"
 )
 
-fullscore_threshold <- 0.3 # two full seconds, then it decays
+# fullscore_threshold <- 0.3 # two full seconds, then it decays
+fullscore_threshold <- 3 # two full seconds, then it decays
 decay_slope <- 3
 max_time <- 10 # we said 10 seconds, right?
 
