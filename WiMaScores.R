@@ -157,6 +157,8 @@ wima_server <- function(input, output, session) {
       computed_scores <- computed_scores[-1,]
     }
     
+    computed_scores <- computed_scores[!(computed_scores$Player == "NullPlayer"),]
+    
     if (nrow(computed_scores) >= 1) {
       computed_scores$Player[1] <- paste0(emo::ji("gold"), computed_scores$Player[1])
     }
@@ -175,6 +177,8 @@ wima_server <- function(input, output, session) {
     
     if ((nr_players == 1) && (unique(hiscores_data()$player_name) == "NullPlayer")) {
       nr_players <- 0
+    } else {
+      nr_players <- nr_players - 1
     }
     
     bslib::value_box("Players so far", 
