@@ -5,6 +5,7 @@ library("dplyr")
 library("reactable")
 
 location_hiscores_file <- "round_records_test.csv"
+# location_hiscores_file <- "../wima2025_exhibit/round_records_test2.csv"
 
 colnames_hiscores_file <- c(
   "round_id",
